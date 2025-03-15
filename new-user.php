@@ -1,4 +1,4 @@
-<?php
+// THIS WILL PROBABLY BE SCRAPPED<?php
 try {
     // Create (or open) the SQLite database file in the current directory.
     $pdo = new PDO('sqlite:' . __DIR__ . '/database.db');
