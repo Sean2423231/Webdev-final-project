@@ -1,0 +1,15 @@
+<?php require_once 'question-of-the-day-logic.php'; ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Question of the Day</title>
+    <link rel="stylesheet" href="question-of-the-day.css">
+</head>
+<body>
+    <div class="container">
+        <div class="question"><?php echo htmlspecialchars($question); ?></div>
+        <textarea class="answer" placeholder="Enter your answer here..."></textarea>
+    </div>
+</body>
+</html>
