@@ -10,6 +10,16 @@
     <div class="container">
         <div class="question"><?php echo htmlspecialchars($question); ?></div>
         <textarea class="answer" placeholder="Enter your answer here..."></textarea>
+        <div class="answers">
+            <h3>Answers</h3>
+            <?php if (!empty($answers)): ?>
+                <?php foreach ($answers as $a): ?>
+                    <div class="answer-item"><?php echo htmlspecialchars($a); ?></div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No answers submitted yet.</p>
+            <?php endif; ?>
+        </div>
     </div>
 </body>
 </html>
