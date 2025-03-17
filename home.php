@@ -6,7 +6,7 @@ require_once __DIR__ . '/includes/header.php';
 <section class="content">
     <div class="main-content">
         <h2>Welcome</h2>
-        <p>SCU asking thingy. This is a temporary layout.</p>
+        <p>This is a resource that allows Santa Clara University Students to answer questions and engage with the community</p>
     </div>
 </section>
 <?php

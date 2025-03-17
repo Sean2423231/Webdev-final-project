@@ -1,5 +1,7 @@
-<?php 
-require_once __DIR__ . '/includes/header.php'; 
+<?php
+$pageTitle = "Question of the Day";
+$currentPage = "question-of-the-day";
+require_once __DIR__ . '/includes/header.php';
 require_once 'question-of-the-day-logic.php';
 ?>
 <!DOCTYPE html>
