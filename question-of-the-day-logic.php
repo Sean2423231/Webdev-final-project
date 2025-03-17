@@ -1,13 +1,12 @@
 <?php
-date_default_timezone_set('America/Los_Angeles'); // Set your desired timezone
-// Path to the SQLite database file
+// question-of-the-day-logic.php
+date_default_timezone_set('America/Los_Angeles');
 $databaseFile = __DIR__ . '/webdev.sqlite';
 
 try {
     $pdo = new PDO('sqlite:' . $databaseFile);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Create tables if they don't exist (including the question_date column).
     $pdo->exec("CREATE TABLE IF NOT EXISTS questions_of_the_day (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         question TEXT NOT NULL,
@@ -22,9 +21,9 @@ try {
         FOREIGN KEY(question_id) REFERENCES questions_of_the_day(id)
     )");
 
-    // Select today's question by filtering on the question_date column.
     $today = date('Y-m-d');
-    $stmt = $pdo->prepare("SELECT id, question, question_date FROM questions_of_the_day WHERE question_date = :today ORDER BY RANDOM() LIMIT 1");
+    $stmt = $pdo->prepare("SELECT id, question, question_date FROM questions_of_the_day 
+                           WHERE question_date = :today ORDER BY RANDOM() LIMIT 1");
     $stmt->bindParam(':today', $today, PDO::PARAM_STR);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -39,10 +38,10 @@ try {
         $question_date = "";
     }
 
-    // Retrieve answers for the selected question, fetching email and answer.
     $answers = [];
     if ($questionId > 0) {
-        $stmt = $pdo->prepare("SELECT answer, email FROM answers WHERE question_id = :qid ORDER BY date_added ASC");
+        $stmt = $pdo->prepare("SELECT answer, email FROM answers 
+                               WHERE question_id = :qid ORDER BY date_added ASC");
         $stmt->bindParam(':qid', $questionId, PDO::PARAM_INT);
         $stmt->execute();
         $answers = $stmt->fetchAll(PDO::FETCH_ASSOC);
