@@ -1,44 +1,74 @@
 <?php require_once 'question-of-the-day-logic.php'; ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Question of the Day</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question of the Day</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="question-of-the-day.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Question of the Day</h1>
-        <?php if ($questionId > 0): ?>
-            <div class="question">
-                <p class="question-text"><?php echo htmlspecialchars($question); ?></p>
-                <p class="question-date">Scheduled for: <?php echo htmlspecialchars($question_date); ?></p>
+  <div class="container">
+    <?php if ($questionId > 0): ?>
+      <!-- Apply both .question-card and .card -->
+      <div class="question-card card">
+        <h2>Question of the Day</h2>
+        <p class="question-text"><?php echo htmlspecialchars($question); ?></p>
+        <p class="question-date">Today: <?php echo htmlspecialchars($question_date); ?></p>
+      </div>
+      <!-- Answer Form -->
+      <div class="answer-form card">
+        <form method="POST" action="submit-answer.php">
+          <input type="hidden" name="question_id" value="<?php echo $questionId; ?>">
+          <div class="form-group">
+            <label for="email" class="form-label">Your @scu.edu Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@scu.edu"
+              required
+              pattern="^[A-Za-z0-9._%+-]+@scu\.edu$"
+              title="Please enter a valid @scu.edu email address"
+              class="form-input"
+            >
+          </div>
+          <div class="form-group">
+            <label for="answer" class="form-label">Your Answer:</label>
+            <textarea
+              id="answer"
+              name="answer"
+              placeholder="Enter your answer here..."
+              required
+              class="form-input"
+            ></textarea>
+          </div>
+          <!-- Use .btn and .btn-primary for styled button -->
+          <button type="submit" class="btn btn-primary">Submit Answer</button>
+        </form>
+      </div>
+    <?php endif; ?>
+
+    <!-- Answers Section -->
+    <div class="answers">
+      <h3>Answers</h3>
+      <?php if (!empty($answers)): ?>
+        <div class="question-card">
+          <?php foreach ($answers as $a): ?>
+            <!-- Apply .card to style each answer box -->
+            <div class="answer-item card">
+              <strong><?php echo htmlspecialchars($a['email']); ?></strong><br>
+              <?php echo htmlspecialchars($a['answer']); ?>
             </div>
-            <form method="POST" action="submit-answer.php">
-                <input type="hidden" name="question_id" value="<?php echo $questionId; ?>">
-                <label for="email">Your @scu.edu Email:</label><br>
-                <input type="email" id="email" name="email" placeholder="you@scu.edu" required
-                       pattern="^[A-Za-z0-9._%+-]+@scu\.edu$"
-                       title="Please enter a valid @scu.edu email address"><br><br>
-                <textarea class="answer" name="answer" placeholder="Enter your answer here..." required></textarea><br>
-                <button type="submit" class="btn btn-primary">Submit Answer</button>
-            </form>
-        <?php else: ?>
-            <p><?php echo htmlspecialchars($question); ?></p>
-        <?php endif; ?>
-        <div class="answers">
-            <h3>Answers</h3>
-            <?php if (!empty($answers)): ?>
-                <?php foreach ($answers as $a): ?>
-                    <div class="answer-item">
-                        <strong><?php echo htmlspecialchars($a['email']); ?></strong><br>
-                        <?php echo htmlspecialchars($a['answer']); ?>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>No answers submitted yet.</p>
-            <?php endif; ?>
+          <?php endforeach; ?>
         </div>
+      <?php else: ?>
+        <p>No answers submitted yet.</p>
+      <?php endif; ?>
     </div>
+  </div>
 </body>
 </html>

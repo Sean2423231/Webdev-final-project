@@ -1,25 +1,56 @@
-<?php require_once 'question-of-the-day-logic.php'; ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Question of the Day</title>
-    <link rel="stylesheet" href="question-of-the-day.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question of the Day Template</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="question-of-the-day.css">
 </head>
 <body>
-    <div class="container">
-        <div class="question"><?php echo htmlspecialchars($question); ?></div>
-        <textarea class="answer" placeholder="Enter your answer here..."></textarea>
-        <div class="answers">
-            <h3>Answers</h3>
-            <?php if (!empty($answers)): ?>
-                <?php foreach ($answers as $a): ?>
-                    <div class="answer-item"><?php echo htmlspecialchars($a); ?></div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>No answers submitted yet.</p>
-            <?php endif; ?>
-        </div>
+  <div class="container">
+    <!-- Question Card -->
+    <div class="question-card">
+      <h2>Question of the Day</h2>
+      <p class="question-text">[Insert Question Text Here]</p>
+      <p class="question-date">Scheduled for: [Insert Question Date Here]</p>
     </div>
+    
+    <!-- Answer Form -->
+    <div class="answer-form">
+      <form method="POST" action="submit-answer.php">
+        <input type="hidden" name="question_id" value="[Insert Question ID Here]">
+        <div class="form-group">
+          <label for="email" class="form-label">Your @scu.edu Email:</label>
+          <input type="email" id="email" name="email" placeholder="you@scu.edu" required
+                 pattern="^[A-Za-z0-9._%+-]+@scu\.edu$"
+                 title="Please enter a valid @scu.edu email address" class="form-input">
+        </div>
+        <div class="form-group">
+          <label for="answer" class="form-label">Your Answer:</label>
+          <textarea id="answer" name="answer" placeholder="Enter your answer here..." required class="form-input"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Answer</button>
+      </form>
+    </div>
+    
+    <!-- Answers Section -->
+    <div class="answers">
+      <h3>Answers</h3>
+      <div class="answers-grid">
+        <!-- Begin Answer Item -->
+        <div class="answer-item">
+          <strong>[User Email]</strong><br>
+          [User Answer]
+        </div>
+        <!-- Repeat Answer Items as needed -->
+        <div class="answer-item">
+          <strong>example@scu.edu</strong><br>
+          This is an example answer.
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
